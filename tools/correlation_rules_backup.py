@@ -121,6 +121,7 @@ def backup_all_correlation_rules(client_id, client_secret, cloud_region, backup_
             rule_name = rule.get("name", "Name not found")
             description = rule.get("description", "No description, please update")
             search_outcome = rule.get("search", {}).get("outcome", "Not found")
+            search_filter = rule.get("search", {}).get("filter", "Not found")
             last_updated_on = rule.get("last_updated_on", "Not found")
             created_on = rule.get("created_on", "Not found")
             status = rule.get("status", "Not found")
@@ -144,6 +145,7 @@ def backup_all_correlation_rules(client_id, client_secret, cloud_region, backup_
                         "rule_name": rule_name,
                         "description": description,
                         "search_outcome": search_outcome,
+                        "search_filter": search_filter,
                         "created_on": created_on,
                         "last_updated_on": last_updated_on,
                         "status": status,
