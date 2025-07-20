@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  crowdstrike-backup:
+    build: .
+    container_name: crowdstrike-backup-tool
+    volumes:
+      # Mount backup directory to persist data
+      - ./correlation_rules_backups:/app/correlation_rules_backups
+      # Mount logs directory
+      - ./logs:/app/logs
+      # Mount .env file for configuration
+      - ./.env:/app/.env:ro
+    environment:
+      # Environment variables can be set here or in .env file
+      - FALCON_CLIENT_ID=${FALCON_CLIENT_ID}
+      - FALCON_CLIENT_SECRET=${FALCON_CLIENT_SECRET}
+      - FALCON_CLOUDREGION=${FALCON_CLOUDREGION:-us-2}
+      - BACKUP_FILTER=${BACKUP_FILTER:-*}
+    restart: unless-stopped
+    profiles:
+      - backup
+      - setup
+      - status
+
+  # Service for running setup
+  setup:
+    build: .
+    container_name: crowdstrike-backup-setup
+    volumes:
+      - ./.env:/app/.env
+    profiles:
+      - setup
+    command: ["setup"]
+
+  # Service for checking status
+  status:
+    build: .
+    container_name: crowdstrike-backup-status
+    volumes:
+      - ./.env:/app/.env:ro
+    profiles:
+      - status
+    command: ["status"]
+
+  # Service for running backup
+  backup:
+    build: .
+    container_name: crowdstrike-backup-run
+    volumes:
+      - ./correlation_rules_backups:/app/correlation_rules_backups
+      - ./logs:/app/logs
+      - ./.env:/app/.env:ro
+    profiles:
+      - backup
+    command: ["backup"] 

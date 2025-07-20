@@ -1,0 +1,26 @@
+# Core dependencies
+crowdstrike-falconpy>=1.5.0
+click>=8.0.0
+rich>=13.0.0
+python-dotenv>=1.0.0
+
+# HTTP requests (required by falconpy)
+requests>=2.25.0
+urllib3>=1.26.0
+
+# SSL certificates (required by requests)
+certifi>=2020.0.0
+
+# Text processing (required by rich)
+charset-normalizer>=3.0.0
+idna>=2.5
+
+# Markdown processing (required by rich)
+markdown-it-py>=2.2.0
+mdurl>=0.1.0
+
+# Syntax highlighting (required by rich)
+Pygments>=2.13.0
+
+# Development dependencies (optional)
+setuptools>=60.0.0
